@@ -1,8 +1,8 @@
 import { listState } from "../atoms/list-atom";
 import { selector } from "recoil/dist";
 
-export const listLengthState = selector({
-  key: "listLengthState",
+export const itemsCountState = selector({
+  key: "itemsCountState",
   get: ({ get }) => {
     const list = get(listState);
 
