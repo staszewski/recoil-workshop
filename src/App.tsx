@@ -1,19 +1,35 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, MouseEvent } from "react";
 import "./App.css";
 import { useRecoilState } from "recoil/dist";
 import { textState } from "./atoms/text-atom";
+import { listState } from "./atoms/list-atom";
 
 function App() {
   const [text, setText] = useRecoilState(textState);
+  const [listItems, setListItems] = useRecoilState<string[]>(listState);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setText(event.target.value);
   };
 
+  const addItemList = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setListItems((oldList: string[]) => {
+      const newList = [...oldList, text];
+      return newList;
+    });
+    setText("");
+  };
+
   return (
     <div className="app">
       <input type="text" value={text} onChange={onChange} />
-      Echo: {text}
+      <button onClick={addItemList}>Add item to list</button>
+      <ul>
+        {listItems.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
