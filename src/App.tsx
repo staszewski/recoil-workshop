@@ -4,6 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil/dist";
 import { textState } from "./atoms/text-atom";
 import { listState } from "./atoms/list-atom";
 import { itemsCountState } from "./selectors/items-count-selector";
+import UserList from "./user-list.component";
 
 function App() {
   const [text, setText] = useRecoilState(textState);
@@ -29,10 +30,13 @@ function App() {
       <button onClick={addItemList}>Add item to list</button>
       <h2>Added items count: {listLength}</h2>
       <ul>
-        {listItems.map((item) => (
-          <li>{item}</li>
+        {listItems.map((item, index) => (
+          <li key={index}>{item}</li>
         ))}
       </ul>
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <UserList />
+      </React.Suspense>
     </div>
   );
 }
